@@ -7,13 +7,15 @@ const Player = () => {
     useContext(PlayerContext);
   return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-4">
-      <div className="hidden lg:flex items-center gap-4">
-        <img className="w-12" src={track.image} alt="" />
-        <div>
-          <p>{track.name}</p>
-          <p>{track.desc.slice(0, 12)}</p>
+      {track ? (
+        <div className="hidden lg:flex items-center gap-4">
+          <img className="w-12" src={track.image} alt="" />
+          <div>
+            <p>{track.name}</p>
+            <p>{track.desc.slice(0, 12)}</p>
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className="flex flex-col items-center gap-1 m-auto">
         <div className="flex gap-4">
           <img

@@ -1,51 +1,104 @@
 import React from "react";
-import { assets } from "../assets/assets";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
-    <div className="w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex">
-      <div className="bg-[#121212] h-[15%] rounded flex flex-col justify-around">
-        <div
-          onClick={() => navigate("/")}
-          className="flex items-center gap-3 pl-8 cursor-pointer"
+    <div className="w-64 bg-gray-900 h-full p-4">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-white">Spotify Clone</h1>
+      </div>
+
+      <nav className="space-y-2">
+        <Link
+          to="/"
+          className={`block px-4 py-2 rounded-lg ${
+            isActive("/")
+              ? "bg-gray-800 text-white"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
         >
-          <img className="w-6" src={assets.home_icon} alt="" />
-          <p className="font-bold">Home</p>
+          Home
+        </Link>
+
+        <Link
+          to="/profile"
+          className={`block px-4 py-2 rounded-lg ${
+            isActive("/profile")
+              ? "bg-gray-800 text-white"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
+        >
+          Profile
+        </Link>
+
+        {user?.role === "artist" && (
+          <>
+            <div className="pt-4 border-t border-gray-700">
+              <h2 className="px-4 text-sm font-semibold text-gray-400 uppercase">
+                Artist Tools
+              </h2>
+            </div>
+
+            <Link
+              to="/upload"
+              className={`block px-4 py-2 rounded-lg ${
+                isActive("/upload")
+                  ? "bg-gray-800 text-white"
+                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+              }`}
+            >
+              Upload Song
+            </Link>
+
+            <Link
+              to="/create-playlist"
+              className={`block px-4 py-2 rounded-lg ${
+                isActive("/create-playlist")
+                  ? "bg-gray-800 text-white"
+                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+              }`}
+            >
+              Create Playlist
+            </Link>
+          </>
+        )}
+
+        <div className="pt-4 border-t border-gray-700">
+          <h2 className="px-4 text-sm font-semibold text-gray-400 uppercase">
+            Library
+          </h2>
         </div>
-        <div className="flex items-center gap-3 pl-8 cursor-pointer">
-          <img className="w-6" src={assets.search_icon} alt="" />
-          <p className="font-bold">Search</p>
-        </div>
-      </div>
-      <div className="bg-[#121212] h-[85%] rounded">
-        <div className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img className="w-8" src={assets.stack_icon} alt="" />
-            <p className="font-semibold">Your library</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <img className="w-5" src={assets.arrow_icon} alt="" />
-            <img className="w-5" src={assets.plus_icon} alt="" />
-          </div>
-        </div>
-        <div className="p-4 bg-[#242424] rounded font-semibold flex flex-col items-start justify-start gap-1 pl-4">
-          <h1>Create your first playlist</h1>
-          <p className="font-light"> It's easy we will help you</p>
-          <button className="px-4 py-1.5 bg-white text-[15px] text-black rounded-full mt-4">
-            Create playlist
-          </button>
-        </div>
-        <div className="p-4 bg-[#242424] rounded font-semibold flex flex-col items-start justify-start gap-1 pl-4 mt-4">
-          <h1>Let's find some podcats to follow</h1>
-          <p className="font-light">We'll keep you updated on new episodes</p>
-          <button className="px-4 py-1.5 bg-white text-[15px] text-black rounded-full mt-4">
-            Browse podcat
-          </button>
-        </div>
-      </div>
+
+        <Link
+          to="/favorites"
+          className={`block px-4 py-2 rounded-lg ${
+            isActive("/favorites")
+              ? "bg-gray-800 text-white"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
+        >
+          Favorites
+        </Link>
+
+        <Link
+          to="/recently-played"
+          className={`block px-4 py-2 rounded-lg ${
+            isActive("/recently-played")
+              ? "bg-gray-800 text-white"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
+        >
+          Recently Played
+        </Link>
+      </nav>
     </div>
   );
 };
